@@ -1,0 +1,32 @@
+{% extends 'geekshop/base.html' %}
+{% load static %}
+
+{% block content %}
+	<div class="container">
+		{% include 'geekshop/includes/inc_index_slider.html' %}
+		<div class="featured">
+			<div class="featured-menu">
+					<a class="active" href="#">Популярные</a><a href="#">Новинки</a>
+			</div>
+			<a class="explore" href="#">показать все <img src="/static/geekshop/img/arrow.png" alt=""></a>
+			<div class="clearfix">
+			</div>
+			<div class="tab-content">
+				{% for block in block_items %}
+					<div class="block">
+						<a href="#"><img src="{{block.img}}" alt="">
+							<div class="text">
+								<img src="/static/geekshop/img/icon-hover.png" alt="img">
+								<h4>{{block.header}}</h4>
+								<p>{{block.text}}</p>
+							</div>
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		
+		<div class="clr"></div>
+
+	</div>
+{% endblock %}
