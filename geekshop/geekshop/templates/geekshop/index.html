@@ -11,19 +11,7 @@
 			<a class="explore" href="#">показать все <img src="/static/geekshop/img/arrow.png" alt=""></a>
 			<div class="clearfix">
 			</div>
-			<div class="tab-content">
-				{% for block in block_items %}
-					<div class="block">
-						<a href="#"><img src="{{block.img}}" alt="">
-							<div class="text">
-								<img src="/static/geekshop/img/icon-hover.png" alt="img">
-								<h4>{{block.header}}</h4>
-								<p>{{block.text}}</p>
-							</div>
-						</a>
-					</div>
-				{% endfor %}
-			</div>
+			{% include 'geekshop/includes/inc_tab_content.html' %}
 		</div>
 		
 		<div class="clr"></div>

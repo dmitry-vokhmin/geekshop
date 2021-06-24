@@ -1,0 +1,14 @@
+<div class="details-slider">
+    <div class="slider-product">
+        <img src="/static/geekshop/img/slider1.jpg">
+    </div>
+    <div class="slider-control">
+        {% for block in slider_blocks %}
+            <div class="block">
+                <a href="#"><img src="{{block.img}}" alt="">
+                    <div class="text"></div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
