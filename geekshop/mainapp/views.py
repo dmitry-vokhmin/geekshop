@@ -1,15 +1,10 @@
 from django.shortcuts import render
+from .models import MenuCategory
 
 
 def products(request):
     title = "продукты/каталог"
-    links_menu = [
-        {"href": "products_all", "name": "все"},
-        {"href": "products_home", "name": "дом"},
-        {"href": "products_office", "name": "офис"},
-        {"href": "products_modern", "name": "модерн"},
-        {"href": "products_classic", "name": "классика"}
-    ]
+    links_menu = MenuCategory.objects.all()
     products_list = [
         {
             "img": "/static/geekshop/img/product-11.jpg",

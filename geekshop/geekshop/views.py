@@ -1,15 +1,13 @@
 from django.shortcuts import render
+from mainapp.models import Product
 
 
 def index(request):
     title = "магазин"
-    block_items = [
-        {"img": "/static/geekshop/img/product-1.jpg", "header": "Отличный стул", "text": "Расположитесь комфортно."},
-        {"img": "/static/geekshop/img/product-2.jpg", "header": "Стул повышенного качества", "text": "Не оторваться."},
-    ]
+    products = Product.objects.all()
     context = {
         "title": title,
-        "block_items": block_items
+        "products": products
     }
     return render(request, "geekshop/index.html", context=context)
 
