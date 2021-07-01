@@ -1,21 +1,6 @@
 from django.db import models
 
 
-class MenuCategory(models.Model):
-    name = models.CharField(verbose_name="имя категории", max_length=64, unique=True)
-    link = models.CharField(verbose_name="ссылка", max_length=64)
-
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name or f"menu category with id - {self.pk}"
-
-    class Meta:
-        verbose_name = "Меню категории"
-        verbose_name_plural = "Меню категорий"
-
-
 class ProductCategory(models.Model):
     name = models.CharField(verbose_name="имя", max_length=64, unique=True)
     description = models.TextField(verbose_name="описание", max_length=200, blank=True)

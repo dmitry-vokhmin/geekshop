@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from .models import MenuCategory
+from .models import ProductCategory
 
 
 def products(request):
     title = "продукты/каталог"
-    links_menu = MenuCategory.objects.all()
+    product_categories = ProductCategory.objects.all()
     products_list = [
         {
             "img": "/static/geekshop/img/product-11.jpg",
@@ -29,7 +29,7 @@ def products(request):
     ]
     context = {
         "title": title,
-        "links_menu": links_menu,
+        "product_categories": product_categories,
         "products_list": products_list,
         "slider_blocks": slider_blocks
     }

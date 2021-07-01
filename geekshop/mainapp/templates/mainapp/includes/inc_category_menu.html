@@ -1,7 +1,7 @@
 <div class="links clearfix">
     <ul class="links-menu">
-        {% for link_menu in links_menu %}
-            <li><a href="{{link_menu.link}}" class="{% if link_menu.link == 'products_all' %}active{% endif %}">{{link_menu.name}}</a></li>
+        {% for category in product_categories %}
+            <li><a href="" class="{#% if category.link == 'products_all' %#}active{#% endif %#}">{{category.name}}</a></li>
         {% endfor %}
     </ul>
 </div>

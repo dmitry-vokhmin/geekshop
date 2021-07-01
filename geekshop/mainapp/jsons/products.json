@@ -1,0 +1,46 @@
+[
+  {
+      "category": "дом",
+      "name": "красивый стул",
+      "image": "product_images/product-1.jpg",
+      "short_desc": "красивый",
+      "description": "",
+      "price": "2000.00",
+      "quantity": 0,
+      "created": "2021-06-28T20:29:29.671Z",
+      "updated": "2021-06-28T20:29:29.671Z"
+  },
+  {
+      "category": "дом",
+      "name": "красивый стул",
+      "image": "product_images/product-4-sm.jpg",
+      "short_desc": "красивый стул",
+      "description": "",
+      "price": "1500.00",
+      "quantity": 0,
+      "created": "2021-06-28T20:29:29.671Z",
+      "updated": "2021-06-28T20:29:29.671Z"
+  },
+  {
+      "category": "дом",
+      "name": "красивый стул",
+      "image": "product_images/product-4.jpg",
+      "short_desc": "красивый стул",
+      "description": "",
+      "price": "1500.00",
+      "quantity": 0,
+      "created": "2021-06-28T20:29:29.671Z",
+      "updated": "2021-06-28T20:29:29.671Z"
+  },
+  {
+      "category": "все",
+      "name": "красивый стул",
+      "image": "product_images/product-3-sm.jpg",
+      "short_desc": "красивый стул",
+      "description": "",
+      "price": "15000.00",
+      "quantity": 0,
+      "created": "2021-06-28T20:29:29.671Z",
+      "updated": "2021-06-28T20:29:29.671Z"
+  }
+]
