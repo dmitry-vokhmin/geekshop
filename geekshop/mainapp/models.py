@@ -4,6 +4,7 @@ from django.db import models
 class ProductCategory(models.Model):
     name = models.CharField(verbose_name="имя", max_length=64, unique=True)
     description = models.TextField(verbose_name="описание", max_length=200, blank=True)
+    is_deleted = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -24,6 +25,7 @@ class Product(models.Model):
     description = models.TextField(verbose_name="описание", max_length=200, blank=True)
     price = models.DecimalField(verbose_name="цена", max_digits=8, decimal_places=2, default=0)
     quantity = models.PositiveIntegerField(verbose_name="количество товара на складе", default=0)
+    is_deleted = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
