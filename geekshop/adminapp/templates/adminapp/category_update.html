@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block content %}
-  <form class="form-horizontal" action="{% url 'admin_staff:category_update' category_form.instance.id %}" method="post">
+  <form class="form-horizontal" action="{% url 'admin_staff:category_update' form.instance.id %}" method="post">
     {% csrf_token %}
-    {{ category_form.as_p }}
+    {{ form.as_p }}
     <input class="form-control" type="submit" value="сохранить">
   </form>
   <button class="btn btn-round form-control last">

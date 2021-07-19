@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import index, contacts
+from .views import ContactsListView, IndexListView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -23,8 +23,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("admin_staff/", include("adminapp.urls", namespace='admin_staff')),
-    path('', index, name="index"),
-    path('contacts/', contacts, name="contacts"),
+    path('', IndexListView.as_view(), name="index"),
+    path('contacts/', ContactsListView.as_view(), name="contacts"),
     path("products/", include("mainapp.urls", namespace="products")),
     path("basket/", include("basketapp.urls", namespace="basket")),
     path("auth/", include("authapp.urls", namespace="auth")),

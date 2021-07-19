@@ -15,23 +15,25 @@
 			<div class="products_list">
 				<div class="title clearfix">
 					<h2>
+						{% if category %}
 					  Категория: "{{ category.name|title }}"
+						{% endif %}
 					</h2>
 				</div>
 				<div class="details-products">
 					<div class="details-slider">
 						<div class="slider-product">
-						  <img src="/media/{{ hot_product.image }}">
+						  <img src="/media/{{ hot_product.image|default:'default_image_product.png' }}">
 						</div>
 						<div class="slider-control">
 						  <div class="block">
-							<a href="#"><img style="width: 70px; height: 70px;" src="/media/{{ hot_product.image }}" alt=""></a>
+							<a href="#"><img style="width: 70px; height: 70px;" src="/media/{{ hot_product.image|default:'default_image_product.png' }}" alt=""></a>
 						  </div>
 						  <div class="block">
-							<a href="#"><img style="width: 70px; height: 70px;" src="/media/{{ hot_product.image }}" alt=""></a>
+							<a href="#"><img style="width: 70px; height: 70px;" src="/media/{{ hot_product.image|default:'default_image_product.png' }}" alt=""></a>
 						  </div>
 						  <div class="block">
-							<a href="#"><img style="width: 70px; height: 70px;" src="/media/{{ hot_product.image }}" alt=""></a>
+							<a href="#"><img style="width: 70px; height: 70px;" src="/media/{{ hot_product.image|default:'default_image_product.png' }}" alt=""></a>
 						  </div>
 						</div>
 					  </div>
@@ -48,6 +50,7 @@
 						</div>
 					</div>
 				</div>
+				{% if object_list %}
 				<div class="related">
 					<div class="title clearfix">
 						<h2>Похожие продукты</h2>
@@ -55,6 +58,24 @@
 					</div>
 					{% include 'mainapp/includes/inc_products.html' %}
 				</div>
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1">&laquo; first</a>
+                                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                            {% endif %}
+
+                            <span class="current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
+
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
+				{% endif %}
 			</div>
 
 			<div class="clr"></div>

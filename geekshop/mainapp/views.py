@@ -1,5 +1,6 @@
 import random
-from django.shortcuts import render, get_object_or_404
+from django.views.generic import DetailView
+from django.views.generic.list import ListView
 from .models import ProductCategory, Product
 from basketapp.models import Basket
 
@@ -17,56 +18,41 @@ def get_hot_product():
 
 
 def get_same_products(hot_product):
-    same_products = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk)[:3]
+    same_products = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk)
     return same_products
 
 
-def products(request, pk=None):
-    title = "продукты/каталог"
-    basket = get_basket(request.user)
-    hot_product = get_hot_product()
-    same_products = get_same_products(hot_product)
-    product_categories = ProductCategory.objects.all()
-    slider_blocks = [
-        {"img": "/static/geekshop/img/controll.jpg"},
-        {"img": "/static/geekshop/img/controll1.jpg"},
-        {"img": "/static/geekshop/img/controll2.jpg"},
-    ]
-    if pk is not None:
-        if pk == 0:
-            products_list = Product.objects.all().order_by("price")
-            category = {"name": "все"}
+class ProductsListView(ListView):
+    model = Product
+    template_name = "mainapp/products.html"
+    paginate_by = 3
+
+    def get_queryset(self):
+        if self.kwargs.get("pk") is None or self.kwargs.get("pk") == 0:
+            products_list = Product.objects.filter(is_deleted=False).order_by("price")
         else:
-            products_list = Product.objects.filter(category__pk=pk).order_by("price")
-            category = get_object_or_404(ProductCategory, pk=pk)
-        context = {
-            "title": title,
-            "product_categories": product_categories,
-            "products_list": products_list,
-            "category": category,
-            'hot_product': hot_product,
-            "same_products": same_products,
-            "basket": basket,
-            "slider_blocks": slider_blocks
-        }
-        return render(request, "mainapp/products.html", context=context)
-    context = {
-        "title": title,
-        "product_categories": product_categories,
-        'hot_product': hot_product,
-        "same_products": same_products,
-        "basket": basket,
-        "slider_blocks": slider_blocks
-    }
-    return render(request, "mainapp/products.html", context=context)
+            products_list = Product.objects.filter(is_deleted=False, category__pk=self.kwargs["pk"]).order_by("price")
+        return products_list
+
+    def get_context_data(self, *, object_list=None, queryset=None, **kwargs):
+        context = super().get_context_data()
+        context["title"] = "продукты/каталог"
+        context["basket"] = get_basket(self.request.user)
+        context["hot_product"] = get_hot_product()
+        context["product_categories"] = ProductCategory.objects.filter(is_deleted=False)
+        category = ProductCategory.objects.filter(pk=self.kwargs.get("pk", 0)).first()
+        context["category"] = category or {"name": "все"}
+        return context
 
 
-def product(request, pk):
-    title = "продукты"
-    context = {
-        "title": title,
-        "product_categories": ProductCategory.objects.all(),
-        "product": get_object_or_404(Product, pk=pk),
-        "basket": get_basket(request.user)
-    }
-    return render(request, "mainapp/product.html", context)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = "mainapp/product.html"
+    context_object_name = "product"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "продукт"
+        context["product_categories"] = ProductCategory.objects.all()
+        context["basket"] = get_basket(self.request.user)
+        return context

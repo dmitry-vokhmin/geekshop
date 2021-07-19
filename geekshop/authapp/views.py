@@ -1,65 +1,44 @@
 from django.shortcuts import render
-from django.contrib import auth
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.contrib.auth.views import LoginView
+from django.views.generic import CreateView, UpdateView
 from .forms import ShopUserLoginForm, ShopUserEditForm, ShopUserRegisterForm
+from .models import ShopUser
 
 
-def login(request):
-    title = "вход"
-    login_form = ShopUserLoginForm(data=request.POST)
-    _next = request.GET["next"] if "next" in request.GET.keys() else ""
-    if request.method == "POST" and login_form.is_valid():
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = auth.authenticate(username=username, password=password)
-        if user and user.is_active:
-            auth.login(request, user)
-            if "next" in request.POST.keys():
-                return HttpResponseRedirect(request.POST["next"])
-            return HttpResponseRedirect(reverse("index"))
-    context = {
-        "title": title,
-        "login_form": login_form,
-        "next": _next,
-    }
-    return render(request, "authapp/login.html", context)
+class Login(LoginView):
+    form_class = ShopUserLoginForm
+    template_name = "authapp/login.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "вход"
+        return context
 
 
-def logout(request):
-    auth.logout(request)
-    return HttpResponseRedirect(reverse("index"))
+class RegisterView(CreateView):
+    model = ShopUser
+    template_name = "authapp/register.html"
+    form_class = ShopUserRegisterForm
+    success_url = reverse_lazy("auth:login")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "регистрация"
+        return context
 
 
-def register(request):
-    title = "регистрация"
+class UpdateUserView(UpdateView):
+    model = ShopUser
+    template_name = "authapp/edit.html"
+    success_url = reverse_lazy("index")
+    form_class = ShopUserEditForm
 
-    if request.method == "POST":
-        register_form = ShopUserRegisterForm(request.POST, request.FILES)
-        if register_form.is_valid():
-            register_form.save()
-            return HttpResponseRedirect(reverse("auth:login"))
-    else:
-        register_form = ShopUserRegisterForm()
-    context = {
-        "title": title,
-        "register_form": register_form
-    }
-    return render(request, "authapp/register.html", context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "редактирование"
+        return context
 
-
-def edit(request):
-    title = "редактирование"
-
-    if request.method == "POST":
-        edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
-        if edit_form.is_valid():
-            edit_form.save()
-            return HttpResponseRedirect(reverse("auth:edit"))
-    else:
-        edit_form = ShopUserEditForm(instance=request.user)
-    context = {
-        "title": title,
-        "edit_form": edit_form
-    }
-    return render(request, "authapp/edit.html", context)
+    def get_object(self, queryset=None):
+        return self.request.user
