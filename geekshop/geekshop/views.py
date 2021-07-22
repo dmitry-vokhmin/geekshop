@@ -1,5 +1,4 @@
 from mainapp.models import Product
-from basketapp.models import Basket
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 
@@ -14,8 +13,6 @@ class IndexListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "магазин"
-        if self.request.user.is_authenticated:
-            context["basket"] = Basket.objects.filter(user=self.request.user)
         return context
 
 
@@ -25,10 +22,6 @@ class ContactsListView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "контакты"
-        basket = []
-        if self.request.user.is_authenticated:
-            basket = Basket.objects.filter(user=self.request.user)
-        context["basket"] = basket
         context["locations"] = [
             {
                 "city": "Москва",

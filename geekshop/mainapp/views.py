@@ -2,14 +2,6 @@ import random
 from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from .models import ProductCategory, Product
-from basketapp.models import Basket
-
-
-def get_basket(user):
-    if user.is_authenticated:
-        return Basket.objects.filter(user=user)
-    else:
-        return []
 
 
 def get_hot_product():
@@ -37,7 +29,6 @@ class ProductsListView(ListView):
     def get_context_data(self, *, object_list=None, queryset=None, **kwargs):
         context = super().get_context_data()
         context["title"] = "продукты/каталог"
-        context["basket"] = get_basket(self.request.user)
         context["hot_product"] = get_hot_product()
         context["product_categories"] = ProductCategory.objects.filter(is_deleted=False)
         category = ProductCategory.objects.filter(pk=self.kwargs.get("pk", 0)).first()
@@ -54,5 +45,4 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = "продукт"
         context["product_categories"] = ProductCategory.objects.all()
-        context["basket"] = get_basket(self.request.user)
         return context
