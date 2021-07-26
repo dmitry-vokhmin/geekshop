@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView, UpdateView, TemplateView
 from django.contrib.auth import login
 from django.core.mail import send_mail
-from .forms import ShopUserLoginForm, ShopUserEditForm, ShopUserRegisterForm
+from .forms import ShopUserLoginForm, ShopUserEditForm, ShopUserRegisterForm, ShopUserProfileEditForm
 from .models import ShopUser
 from geekshop import settings
 
@@ -64,11 +64,24 @@ class UpdateUserView(UpdateView):
     template_name = "authapp/edit.html"
     success_url = reverse_lazy("index")
     form_class = ShopUserEditForm
+    second_form_class = ShopUserProfileEditForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["form_2"] = self.second_form_class(instance=self.object.shopuserprofile)
         context["title"] = "редактирование"
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        form_2 = self.second_form_class(request.POST, instance=self.object.shopuserprofile)
+        if form.is_valid() and form_2.is_valid():
+            self.object = form.save()
+            self.object.shopuserprofile = form_2.save()
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return self.render_to_response(self.get_context_data())
 
     def get_object(self, queryset=None):
         return self.request.user
