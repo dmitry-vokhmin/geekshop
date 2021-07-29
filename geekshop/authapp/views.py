@@ -78,7 +78,6 @@ class UpdateUserView(UpdateView):
         form_2 = self.second_form_class(request.POST, instance=self.object.shopuserprofile)
         if form.is_valid() and form_2.is_valid():
             self.object = form.save()
-            self.object.shopuserprofile = form_2.save()
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data())
