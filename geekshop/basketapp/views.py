@@ -47,7 +47,7 @@ class BasketEditView(LoginRequiredMixin, View):
             new_basket_item = Basket.objects.get(pk=int(self.kwargs["pk"]))
             if quantity > 0:
                 new_basket_item.quantity = quantity
-                new_basket_item.save()
+                new_basket_item.save(update_fields=["quantity"])
             else:
                 new_basket_item.delete()
             basket_items = Basket.objects.filter(user=request.user).order_by("product__category")

@@ -1,7 +1,14 @@
 from django.conf import settings
 from django.db import models
-
 from mainapp.models import Product
+
+
+class OrderItemQuerySet(models.QuerySet):
+    def delete(self):
+        for obj in self:
+            obj.product.quantity += obj.quantity
+            obj.product.save()
+        super().delete()
 
 
 class Order(models.Model):
@@ -68,6 +75,8 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    # objects = OrderItemQuerySet.as_manager()
+
     order = models.ForeignKey(
         Order,
         related_name="orderitems",
@@ -85,5 +94,14 @@ class OrderItem(models.Model):
         default=0,
     )
 
+    @staticmethod
+    def get_item(pk):
+        return OrderItem.objects.filter(pk=pk).first()
+
     def get_product_cost(self):
         return self.product.price * self.quantity
+
+    # def delete(self, using=None, keep_parents=False):
+    #     self.product.quantity += self.quantity
+    #     self.product.save()
+    #     super().delete(using=None, keep_parents=False)
