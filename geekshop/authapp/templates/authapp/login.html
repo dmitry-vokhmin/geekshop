@@ -1,0 +1,35 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block content %}
+    <div class="container">
+        <div class="login">
+            <div class="h2 text-center head">
+                Вход в систему
+            </div>
+        </div>
+        <div class="row">
+            <div class="mx-auto col-3">
+                <form class="form-horizontal" action="{% url 'auth:login' %}" method="post">
+                    {% csrf_token %}
+                    {% if next %}
+                        <input type="hidden" name="next" value="{{ next }}">
+                    {% endif %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </form>
+            </div>
+        </div>
+        <div class="text-center">
+            <p>Not a member? <a href="{% url 'auth:register' %}">Register</a></p>
+            <p>or sign up with:</p>
+            <a class="btn btn-primary btn-floating mx-1" href="{% url 'social:begin' 'facebook' %}?next=/">
+            <i class="fab fa-facebook-f"></i>
+            </a>
+            <a class="btn btn-primary btn-floating mx-1" href="{% provider_login_url 'google' %}">
+            <i class="fab fa-google"></i>
+            </a>
+        </div>
+    </div>
+{% endblock %}

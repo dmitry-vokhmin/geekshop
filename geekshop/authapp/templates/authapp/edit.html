@@ -1,0 +1,34 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="login">
+            <div class="h2 text-center head">
+                Edit Profile
+            </div>
+        </div>
+        <div class="col-4 mx-auto">
+            <div class="row">
+                <div class="user_avatar">
+                    <img src="/media/{{ object.avatar|default:'avatar-default.png' }}" class="rounded-circle">
+                </div>
+            </div>
+            <div class="row">
+                <form class="form-horizontal" action="{% url 'auth:edit' %}" method="post"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {{ form_2.as_p }}
+                    <input class="form-control" type="submit" value="сохранить">
+                </form>
+                <button class="btn btn-round form-control last">
+                    <a href="{% url 'geekshopapp:index' %}" class="">
+                        на главную
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

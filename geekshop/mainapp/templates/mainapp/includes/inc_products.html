@@ -1,0 +1,13 @@
+<div class="related-products clearfix">
+    {% for product in object_list %}
+        <div class="block">
+            <a href="{% url 'products:product' product.pk %}"><img class="img_product" src="/media/{{product.image|default:'default_image_product.png'}}" alt="">
+                <div class="text">
+                    <img src="/static/geekshop/img/icon-hover.png" alt="img">
+                    <h4>{{product.name}}</h4>
+                    <p>{{product.short_desc}}</p>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>

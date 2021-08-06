@@ -1,0 +1,21 @@
+{% extends 'basketapp/basket.html' %}
+{% load static %}
+
+
+{% block delete %}
+    <div class="row">
+        <p> Осторожно! Вы точно хотите удалить продукт - {{ object.product.name }} ?</p>
+        <form class="form-horizontal" action="{% url 'basket:remove' object.pk %}" method="post"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            <input class="btn btn-danger m-3" type="submit" value="Удалить">
+        </form>
+        <a href="{% url 'basket:view' %}" class="m-3">
+            <button class="btn btn-round btn-success">
+
+                Отмена
+
+            </button>
+        </a>
+    </div>
+{% endblock %}
