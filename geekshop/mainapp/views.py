@@ -29,7 +29,7 @@ class ProductsListView(ListView):
     def get_context_data(self, *, object_list=None, queryset=None, **kwargs):
         context = super().get_context_data()
         context["title"] = "продукты/каталог"
-        context["hot_product"] = get_hot_product()
+        context["product"] = get_hot_product()
         context["product_categories"] = ProductCategory.objects.filter(is_deleted=False)
         category = ProductCategory.objects.filter(pk=self.kwargs.get("pk", 0)).first()
         context["category"] = category or {"name": "все"}
@@ -38,11 +38,11 @@ class ProductsListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = "mainapp/product.html"
+    template_name = "mainapp/products.html"
     context_object_name = "product"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "продукт"
-        context["product_categories"] = ProductCategory.objects.all()
+        context["product_categories"] = ProductCategory.objects.filter(is_deleted=False)
         return context

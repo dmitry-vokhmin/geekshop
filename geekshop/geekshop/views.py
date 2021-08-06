@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 
 class IndexListView(ListView):
     model = Product
-    template_name = "geekshop/index.html"
+    template_name = "geekshopapp/index.html"
 
     def get_queryset(self):
         return Product.objects.all()[:4]
@@ -17,7 +17,7 @@ class IndexListView(ListView):
 
 
 class ContactsListView(TemplateView):
-    template_name = "geekshop/contact.html"
+    template_name = "geekshopapp/contact.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,7 +26,7 @@ class ContactsListView(TemplateView):
             {
                 "city": "Москва",
                 "phone": "+7-888-888-8888",
-                "email": "info@geekshop.ru",
+                "email": "info@geekshopapp.ru",
                 "address": "В пределах МКАД"
             } for _ in range(3)
         ]

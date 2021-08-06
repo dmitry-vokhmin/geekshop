@@ -24,7 +24,7 @@ class VerifyTemplateView(TemplateView):
             user.is_active = True
             user.activation_key = ""
             user.save()
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         self.template_name = "authapp/verification.html"
         return super().get(request, *args, **kwargs)
 

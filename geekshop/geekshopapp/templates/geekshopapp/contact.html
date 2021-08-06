@@ -1,0 +1,13 @@
+{% extends 'geekshopapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="hero">
+        {% include 'geekshopapp/includes/inc_main_menu.html' %}
+        <h1>наши контакты</h1>
+    </div>
+    <div class="container_pr">
+        {% include 'geekshopapp/includes/inc_location.html' %}
+    </div>
+    {% include "geekshopapp/includes/inc_footer.html" %}
+{% endblock %}

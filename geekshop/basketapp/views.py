@@ -11,7 +11,7 @@ from mainapp.models import Product
 
 class BasketListView(LoginRequiredMixin, ListView):
     model = Basket
-    template_name = "basketapp/basket.html"
+    template_name = "basketapp/basket_items.html"
     context_object_name = "basket_items"
 
     def get_queryset(self):
@@ -38,6 +38,11 @@ class BasketDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "basketapp/basket_delete.html"
     success_url = reverse_lazy("basket:view")
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data["basket"] = Basket.objects.filter(user=self.request.user.pk)
+        return data
+
 
 class BasketEditView(LoginRequiredMixin, View):
 
@@ -51,8 +56,12 @@ class BasketEditView(LoginRequiredMixin, View):
             else:
                 new_basket_item.delete()
             basket_items = Basket.objects.filter(user=request.user).order_by("product__category")
+            if basket_items.first():
+                basket_count = basket_items.first().total_quantity
+            else:
+                basket_count = "0"
             context = {
                 "basket_items": basket_items
             }
             result = render_to_string("basketapp/includes/inc_basket_list.html", context)
-            return JsonResponse({"result": result})
+            return JsonResponse({"result": result, "basket_count": basket_count})

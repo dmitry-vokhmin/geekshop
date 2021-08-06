@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.db import transaction
@@ -8,6 +9,7 @@ from django.forms import inlineformset_factory
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from basketapp.models import Basket
+from mainapp.models import Product
 from ordersapp.models import Order, OrderItem
 from ordersapp.forms import OrderItemForm, OrderForm
 
@@ -28,11 +30,12 @@ class OrderCreate(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
+        basket_items = Basket.objects.filter(user=self.request.user)
 
         if self.request.POST:
             formset = OrderFormSet(self.request.POST)
+            basket_items.delete()
         else:
-            basket_items = Basket.objects.filter(user=self.request.user)
             if len(basket_items):
                 OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=len(basket_items))
                 formset = OrderFormSet()
@@ -40,7 +43,6 @@ class OrderCreate(LoginRequiredMixin, CreateView):
                     form.initial['product'] = basket_items[num].product
                     form.initial['quantity'] = basket_items[num].quantity
                     form.initial['price'] = basket_items[num].product.price
-                basket_items.delete()
             else:
                 formset = OrderFormSet()
 
@@ -142,3 +144,12 @@ def product_quantity_update_save(sender, instance, **kwargs):
 def product_quantity_update_delete(sender, instance, **kwargs):
     instance.product.quantity += instance.quantity
     instance.product.save()
+
+
+def get_product_price(request, pk):
+    if request.is_ajax():
+        product = Product.objects.filter(pk=int(pk)).first()
+        if product:
+            return JsonResponse({'price': product.price})
+        else:
+            return JsonResponse({'price': 0})

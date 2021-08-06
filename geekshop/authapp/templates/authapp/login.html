@@ -4,9 +4,14 @@
 
 {% block content %}
     <div class="container">
+        <div class="login">
+            <div class="h2 text-center head">
+                Вход в систему
+            </div>
+        </div>
         <div class="row">
             <div class="mx-auto col-3">
-                <form class="form-horizontal" action="{% url 'auth:login' %}" method="post" >
+                <form class="form-horizontal" action="{% url 'auth:login' %}" method="post">
                     {% csrf_token %}
                     {% if next %}
                         <input type="hidden" name="next" value="{{ next }}">
@@ -16,19 +21,15 @@
                 </form>
             </div>
         </div>
-        <button class="btn btn-round form-control">
-            <a href="{% url 'auth:register' %}" class="">
-                зарегистрироваться
+        <div class="text-center">
+            <p>Not a member? <a href="{% url 'auth:register' %}">Register</a></p>
+            <p>or sign up with:</p>
+            <a class="btn btn-primary btn-floating mx-1" href="{% url 'social:begin' 'facebook' %}?next=/">
+            <i class="fab fa-facebook-f"></i>
             </a>
-        </button>
-        <button class="btn btn-round form-control">
-            <a href="{% provider_login_url 'google' %}">Login With Google</a>
+            <a class="btn btn-primary btn-floating mx-1" href="{% provider_login_url 'google' %}">
+            <i class="fab fa-google"></i>
             </a>
-        </button>
-        <button class="btn btn-round form-control">
-            <a href="{% url 'social:begin' 'facebook' %}?next=/">
-             Вход через Facebook
-            </a>
-        </button>
+        </div>
     </div>
 {% endblock %}

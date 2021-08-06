@@ -1,84 +1,101 @@
-{% extends 'geekshop/base.html' %}
+{% extends 'geekshopapp/base.html' %}
 {% load static %}
 
 {% block css %}
-	<link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
+    <link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
 {% endblock %}
 
 {% block content %}
-	<div class="container">
-		<div class="hero-white">
-			{% include 'geekshop/includes/inc_main_menu.html' %}
-		</div>
-		<div class="details">
-			{% include 'mainapp/includes/inc_category_menu.html' %}
-			<div class="products_list">
-				<div class="title clearfix">
-					<h2>
-						{% if category %}
-					  Категория: "{{ category.name|title }}"
-						{% endif %}
-					</h2>
-				</div>
-				<div class="details-products">
-					<div class="details-slider">
-						<div class="slider-product">
-						  <img src="/media/{{ hot_product.image|default:'default_image_product.png' }}">
-						</div>
-						<div class="slider-control">
-						  <div class="block">
-							<a href="#"><img style="width: 70px; height: 70px;" src="/media/{{ hot_product.image|default:'default_image_product.png' }}" alt=""></a>
-						  </div>
-						  <div class="block">
-							<a href="#"><img style="width: 70px; height: 70px;" src="/media/{{ hot_product.image|default:'default_image_product.png' }}" alt=""></a>
-						  </div>
-						  <div class="block">
-							<a href="#"><img style="width: 70px; height: 70px;" src="/media/{{ hot_product.image|default:'default_image_product.png' }}" alt=""></a>
-						  </div>
-						</div>
-					  </div>
-
-					  <div class="description">
-						<h3 class="big-bold">{{ hot_product.name }}</h3>
-						<h3 class="red">горячее предложение</h3>
-						<p class="price">{{ hot_product.price }} <span>руб</span></p>
-						<a href="{% url 'basket:add' hot_product.pk %}" class="red-button">
-						  заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
-						</a>
-						<div class="description-text">
-						  {{ hot_product.description }}
-						</div>
-					</div>
-				</div>
-				{% if object_list %}
-				<div class="related">
-					<div class="title clearfix">
-						<h2>Похожие продукты</h2>
-						<a class="explore" href="#">показать все <img src="/static/geekshop/img/arrow.png" alt=""></a>
-					</div>
-					{% include 'mainapp/includes/inc_products.html' %}
-				</div>
-                    <div class="pagination">
-                        <span class="step-links">
-                            {% if page_obj.has_previous %}
-                                <a href="?page=1">&laquo; first</a>
-                                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                            {% endif %}
-
-                            <span class="current">
-                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                            </span>
-
-                            {% if page_obj.has_next %}
-                                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                            {% endif %}
-                        </span>
+    {% include 'geekshopapp/includes/inc_main_menu.html' %}
+    <div class="container_pr">
+        {% include 'mainapp/includes/inc_category_menu.html' %}
+        <div class="products_list">
+            <div class="title clearfix">
+                <h2>
+                    {% if category %}
+                        Категория: "{{ category.name|title }}"
+                    {% endif %}
+                </h2>
+            </div>
+            <div class="details-products clearfix">
+                <div class="details-slider">
+                    <div>
+                        <img class="slider-product"
+                             src="/media/{{ product.image|default:'default_image_product.png' }}">
                     </div>
-				{% endif %}
-			</div>
+                    <div class="slider-control">
+                        <div class="block">
+                            <a href="#"><img style="width: 70px; height: 70px;"
+                                             src="/media/{{ product.image|default:'default_image_product.png' }}"
+                                             alt=""></a>
+                        </div>
+                        <div class="block">
+                            <a href="#"><img style="width: 70px; height: 70px;"
+                                             src="/media/{{ product.image|default:'default_image_product.png' }}"
+                                             alt=""></a>
+                        </div>
+                        <div class="block">
+                            <a href="#"><img style="width: 70px; height: 70px;"
+                                             src="/media/{{ product.image|default:'default_image_product.png' }}"
+                                             alt=""></a>
+                        </div>
+                    </div>
+                </div>
 
-			<div class="clr"></div>
-
-		</div>
+                <div class="description">
+                    <h3 class="big-bold">{{ product.name|capfirst }}</h3>
+                    <h3 class="red">горячее предложение</h3>
+                    <p class="price">{{ product.price }} <span>руб</span></p>
+                    <a href="{% url 'basket:add' product.pk %}" class="red-button">
+                        заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    </a>
+                    <div class="description-text">
+                        {{ product.description }}
+                    </div>
+                </div>
+            </div>
+            {% if object_list %}
+                <div class="related">
+                    <div class="title clearfix">
+                        <h2>Похожие продукты</h2>
+                        <a class="explore" href="#">показать все <img src="/static/geekshop/img/arrow.png" alt=""></a>
+                    </div>
+                    {% include 'mainapp/includes/inc_products.html' %}
+                </div>
+                <nav class="paginator_container" aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                            </li>
+                        {% endif %}
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ page_obj.number }}">{{ page_obj.number }}</a>
+                        </li>
+                        {% if page_obj.has_next %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                            </li>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+    {% include "geekshopapp/includes/inc_footer.html" %}
 {% endblock %}

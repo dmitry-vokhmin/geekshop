@@ -1,8 +1,8 @@
-{% extends 'geekshop/base.html' %}
+{% extends 'geekshopapp/base.html' %}
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'basketapp/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'geekshop/style.css' %}">
 {% endblock %}
 
 {% block js %}
@@ -15,57 +15,69 @@
 {% block content %}
 
     {% if user.is_authenticated %}
-        <div class="container">
-            <div class="row">
-                {% include 'ordersapp/includes/inc_order_summary.html' %}
-                <div class="order_form">
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <table class="table">
-                            {{ orderitems.management_form }}
-                            {% for form in orderitems.forms %}
-                                {% if forloop.first %}
-                                    <thead>
-                                    <tr>
-                                        {% for field in form.visible_fields %}
-                                            <th class="{% cycle 'td1' 'td2' 'td3' %} order formset_td">
-                                                {{ field.label|capfirst }}
-                                            </th>
-                                        {% endfor %}
-                                    </tr>
-                                    </thead>
-                                {% endif %}
-                                <tr class="formset_row">
-                                    {% for field in form.visible_fields %}
-                                        <td class="{% cycle 'td1' 'td2' 'td3' %} order formset_td">
-                                            {% if forloop.first %}
-                                                {% for hidden in form.hidden_fields %}
-                                                    {{ hidden }}
+        <div class="basket_container">
+            <div class="top_basket">
+                <div class="hero_basket">
+                    {% include 'geekshopapp/includes/inc_main_menu.html' %}
+                </div>
+                <div class="container">
+                    <div class="row">
+                        {% include 'ordersapp/includes/inc_order_summary.html' %}
+                        <div class="order_form">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <table class="table">
+                                    {{ orderitems.management_form }}
+                                    {% for form in orderitems.forms %}
+                                        {% if forloop.first %}
+                                            <thead>
+                                            <tr>
+                                                {% for field in form.visible_fields %}
+                                                    <th class="{% cycle 'td1' 'td2' 'td3' %} order formset_td">
+                                                        {{ field.label|capfirst }}
+                                                    </th>
                                                 {% endfor %}
-                                            {% endif %}
-                                            {{ field.errors.as_ul }}
-                                            {% if field.name != 'price' %}
-                                                {{ field }}
-                                            {% else %}
-                                                {% if field.value %}
-                                                    <span class="orderitems-{{ forloop.parentloop.counter0 }}-price">
+                                            </tr>
+                                            </thead>
+                                        {% endif %}
+                                        <tr class="formset_row">
+                                            {% for field in form.visible_fields %}
+                                                <td class="{% cycle 'td1' 'td2' 'td3' %} order formset_td">
+                                                    {% if forloop.first %}
+                                                        {% for hidden in form.hidden_fields %}
+                                                            {{ hidden }}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                    {{ field.errors.as_ul }}
+                                                    {% if field.name != 'price' %}
+                                                        {{ field }}
+                                                    {% else %}
+                                                        {% if field.value %}
+                                                            <span class="orderitems-{{ forloop.parentloop.counter0 }}-price">
                                                      {{ field.value }}
                                                     </span> руб
-                                                {% endif %}
-                                            {% endif %}
-                                        </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
                                     {% endfor %}
-                                </tr>
-                            {% endfor %}
-                        </table>
-                        <button type="submit" value="сохранить" class="btn btn-default btn-round form-control last">
-                            сохранить
-                        </button>
-                        {% include 'ordersapp/includes/inc_order_actions.html' %}
-                    </form>
+                                </table>
+                                <div class="order_save">
+                                    <button type="submit" value="сохранить"
+                                            class="btn form-control btn-primary">
+                                        сохранить
+                                    </button>
+                                </div>
+
+                                {% include 'ordersapp/includes/inc_order_actions.html' %}
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {% include "geekshopapp/includes/inc_footer.html" %}
         </div>
     {% endif %}
 {% endblock %}
