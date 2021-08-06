@@ -52,8 +52,22 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+    'storages'
 ]
+
+AWS_ACCESS_KEY_ID = 'AKIAZKTYC6ZTGHTXFJYI'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'geekshop-django'
+AWS_S3_REGION_NAME = 'us-east-1'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_DEFAULT_ACL = None
+
+STATICFILES_LOCATION = "static"
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+MEDIAFILES_LOCATION = "media"
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
