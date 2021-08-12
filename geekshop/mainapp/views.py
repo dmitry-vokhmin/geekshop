@@ -1,5 +1,7 @@
 import random
-from django.views.generic import DetailView
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+from django.views.generic import DetailView, View
 from django.views.generic.list import ListView
 from .models import ProductCategory, Product
 
@@ -46,3 +48,19 @@ class ProductDetailView(DetailView):
         context["title"] = "продукт"
         context["product_categories"] = ProductCategory.objects.filter(is_deleted=False)
         return context
+
+
+class ProductDetailViewAjax(View):
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            context = {
+                "product_categories": ProductCategory.objects.filter(is_deleted=False),
+                "product": Product.objects.filter(pk=self.kwargs["pk"]).first()
+            }
+            result = render_to_string(
+                "mainapp/includes/inc_products_list_content.html",
+                context=context,
+                request=request
+            )
+            return JsonResponse({'result': result})
