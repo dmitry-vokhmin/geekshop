@@ -21,9 +21,11 @@ class ShopAdminEditForm(ShopUserEditForm):
 
 
 class ProductCategoryEditForm(forms.ModelForm):
+    discount = forms.IntegerField(label="Discount", required=False, min_value=0, max_value=90, initial=0)
+
     class Meta:
         model = ProductCategory
-        fields = '__all__'
+        exclude = ()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

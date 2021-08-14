@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import user_passes_test
+from django.db.models import F
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.list import ListView
@@ -8,6 +9,8 @@ from authapp.forms import ShopUserRegisterForm
 from authapp.models import ShopUser
 from .forms import ShopAdminEditForm, ProductCategoryEditForm, ProductCategoryCreateForm, ProductEditForm
 from mainapp.models import Product, ProductCategory
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
 
 
 class UserListView(ListView):
@@ -112,6 +115,13 @@ class CategoryUpdateView(UpdateView):
         context["title"] = "категории/редактировать"
         return context
 
+    def form_valid(self, form):
+        if "discount" in form.cleaned_data:
+            discount = form.cleaned_data["discount"]
+            if discount:
+                self.object.product_set.update(price=F("price") * (1 - discount / 100))
+        return super().form_valid(form)
+
 
 class CategoryDeleteView(DeleteView):
     model = ProductCategory
@@ -209,3 +219,12 @@ class ProductDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context["title"] = "продукты/удаление"
         return context
+
+
+@receiver(pre_save, sender=ProductCategory)
+def product_is_active_update_product_category_save(sender, instance, **kwargs):
+    if instance.pk:
+        if instance.is_deleted:
+            instance.product_set.update(is_deleted=True)
+        else:
+            instance.product_set.update(is_deleted=False)
