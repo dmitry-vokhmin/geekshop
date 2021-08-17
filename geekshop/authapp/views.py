@@ -74,7 +74,7 @@ class ActivationEmailView(TemplateView):
 class UpdateUserView(UpdateView):
     model = ShopUser
     template_name = "authapp/edit.html"
-    success_url = reverse_lazy("index")
+    success_url = reverse_lazy("geekshopapp:index")
     form_class = ShopUserEditForm
     second_form_class = ShopUserProfileEditForm
 
