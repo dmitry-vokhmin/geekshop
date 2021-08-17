@@ -1,3 +1,5 @@
+{%  load static %}
+
 <div class="container_pr">
     {% include 'mainapp/includes/inc_category_menu.html' %}
     <div class="products_list">
@@ -12,7 +14,7 @@
             <div class="details-slider">
                 <div>
                     <img class="slider-product"
-                         src="https://geekshop-django.s3.amazonaws.com/media/{{ product.image|default:'default_image_product.png' }}">
+                         src="{{ product.image.url|default:'default_image_product.png' }}">
                 </div>
                 <div class="slider-control">
                     <div class="block">
@@ -22,12 +24,12 @@
                     </div>
                     <div class="block">
                         <a href="#"><img style="width: 70px; height: 70px;"
-                                         src="/media/{{ product.image|default:'default_image_product.png' }}"
+                                         src="/media/{{ product.image.url|default:'default_image_product.png' }}"
                                          alt=""></a>
                     </div>
                     <div class="block">
                         <a href="#"><img style="width: 70px; height: 70px;"
-                                         src="/media/{{ product.image|default:'default_image_product.png' }}"
+                                         src="/media/{{ product.image.url|default:'default_image_product.png' }}"
                                          alt=""></a>
                     </div>
                 </div>
@@ -49,7 +51,7 @@
             <div class="related">
                 <div class="title clearfix">
                     <h2>Similar products</h2>
-                    <a class="explore" href="#">show all<img src="/static/geekshop/img/arrow.png" alt=""></a>
+                    <a class="explore" href="#">show all<img src="{% static "geekshop/img/arrow.png" %}" alt=""></a>
                 </div>
                 {% include 'mainapp/includes/inc_products.html' %}
             </div>

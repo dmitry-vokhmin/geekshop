@@ -5,7 +5,7 @@
 {% block content %}
     <div class="row">
         <div class="text-center">
-            <img src="/media/{{ form.instance.image|default:'default_image_product.png' }}" class="w-25">
+            <img src="{{ form.instance.image.url|default:'default_image_product.png' }}" class="w-25">
         </div>
     </div>
     <div class="row">
