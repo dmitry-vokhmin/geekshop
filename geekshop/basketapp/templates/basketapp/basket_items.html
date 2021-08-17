@@ -20,10 +20,10 @@
             <tr style="vertical-align: baseline;">
                 <th scope="row">{{ forloop.counter }}</th>
                 <td><img class="basket_img"
-                         src="/media/{{ item.product.image|default:'default_image_product.png' }}">{{ item.product }}</td>
+                         src="{{ item.product.image.url|default:'default_image_product.png' }}">{{ item.product }}</td>
                 <td><input type="number" name="{{ item.pk }}"
                            min="0"
-                           value="{{ item.quantity }}"></td>
+                           value="{{ item.quantity }}$"></td>
                 <td>{{ item.product.price }}</td>
                 <td>
                     <button class="btn btn-round">
