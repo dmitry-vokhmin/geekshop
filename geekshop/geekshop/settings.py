@@ -54,7 +54,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'storages'
+    'storages',
+    'debug_toolbar',
+    'template_profiler_panel',
+    'django_extensions',
 ]
 
 AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
