@@ -12,12 +12,12 @@
             <div class="details-slider">
                 <div>
                     <img class="slider-product"
-                         src="/media/{{ product.image|default:'default_image_product.png' }}">
+                         src="https://geekshop-django.s3.amazonaws.com/media/{{ product.image|default:'default_image_product.png' }}">
                 </div>
                 <div class="slider-control">
                     <div class="block">
                         <a href="#"><img style="width: 70px; height: 70px;"
-                                         src="/media/{{ product.image|default:'default_image_product.png' }}"
+                                         src="{{ product.image.url|default:'default_image_product.png' }}"
                                          alt=""></a>
                     </div>
                     <div class="block">
