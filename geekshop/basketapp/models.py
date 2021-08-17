@@ -1,6 +1,7 @@
 from django.db import models
 from geekshop import settings
 from mainapp.models import Product
+from django.utils.functional import cached_property
 
 
 class BasketQuerySet(models.QuerySet):
@@ -17,9 +18,13 @@ class Basket(models.Model):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="basket")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(verbose_name="количество", default=0)
+    quantity = models.PositiveIntegerField(verbose_name="quantity", default=0)
     is_deleted = models.BooleanField(default=False)
-    add_datetime = models.DateTimeField(verbose_name="время", auto_now_add=True)
+    add_datetime = models.DateTimeField(verbose_name="date", auto_now_add=True)
+
+    @cached_property
+    def get_items_cached(self):
+        return self.user.basket.select_related()
 
     @staticmethod
     def get_item(pk):
@@ -31,15 +36,16 @@ class Basket(models.Model):
 
     @property
     def total_quantity(self):
-        _items = Basket.objects.filter(user=self.user)
+        _items = self.get_items_cached
         _total_quantity = sum(list(map(lambda x: x.quantity, _items)))
         return _total_quantity
 
     @property
     def total_cost(self):
-        _items = Basket.objects.filter(user=self.user)
-        _total_cost = sum(list(map(lambda x: x.product_cost, _items)))
-        return _total_cost
+        _items = self.get_items_cached
+        _total_cost = _items.annotate(cost=models.F("product__price") * models.F("quantity")).aggregate(models.Sum(models.F("cost")))
+        # _total_cost = sum(list(map(lambda x: x.product_cost, _items)))
+        return _total_cost["cost__sum"]
 
     # def delete(self, using=None, keep_parents=False):
     #     self.product.quantity += self.quantity

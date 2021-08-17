@@ -7,17 +7,17 @@
         <div class="row">
             <div class="mx-auto col-3">
                 {% if user.is_authenticated %}
-                    <h1>Поздравляем!</h1>
-                    <p>с успешной активации, теперь вы можете перейти на сайт.</p>
+                    <h1>Success!</h1>
+                    <p>You activated your account successfully!</p>
                 {% else %}
-                    <h1>Ошибка!</h1>
-                    <p>обратитесь к администратору и можете перейти на главную страницу.</p>
+                    <h1>Error!</h1>
+                    <p>Something went wrong. Send email to our support center!</p>
                 {% endif %}
             </div>
         </div>
         <button class="btn btn-round form-control">
         <a href="{% url 'geekshopapp:index' %}" class="">
-            на главную страницу
+            Main page
         </a>
     </button>
     </div>

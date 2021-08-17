@@ -11,8 +11,8 @@ from geekshop import settings
 
 def send_verify_email(user):
     verify_link = reverse("auth:verify", args=[user.email, user.activation_key])
-    title = f"Активация на сайте пользователя - {user.username}"
-    message = f"Для активации учетной записи перейдите по ссылке \n{settings.DOMAIN_NAME}{verify_link}"
+    title = f"Activation for - {user.username}"
+    message = f"To activate your account follow the link: \n{settings.DOMAIN_NAME}{verify_link}"
     return send_mail(title, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
 
 
@@ -35,7 +35,7 @@ class Login(LoginView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "вход"
+        context["title"] = "login"
         return context
 
 
@@ -43,20 +43,32 @@ class RegisterView(CreateView):
     model = ShopUser
     template_name = "authapp/register.html"
     form_class = ShopUserRegisterForm
-    success_url = reverse_lazy("auth:login")
 
     def form_valid(self, form):
         self.object = form.save()
         if send_verify_email(self.object):
-            print("Сообщение отправлено")
+            print("Message sent")
         else:
-            print("Не удалось отправить сообщение")
+            print("Message was not sent")
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse("auth:email", kwargs={"email": self.object.email})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "регистрация"
+        context["title"] = "registration"
         return context
+
+
+class ActivationEmailView(TemplateView):
+    template_name = "authapp/email_sent.html"
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data["title"] = "Activation"
+        data["email"] = self.kwargs["email"]
+        return data
 
 
 class UpdateUserView(UpdateView):
@@ -69,7 +81,7 @@ class UpdateUserView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form_2"] = self.second_form_class(instance=self.object.shopuserprofile)
-        context["title"] = "редактирование"
+        context["title"] = "edit"
         return context
 
     def post(self, request, *args, **kwargs):

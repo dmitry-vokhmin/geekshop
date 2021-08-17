@@ -12,11 +12,11 @@
         <form class="form-horizontal" action="{% url 'admin_staff:product_update' form.instance.pk %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <input class="form-control" type="submit" value="сохранить">
+            <input class="form-control" type="submit" value="save">
         </form>
         <button class="btn btn-round form-control last">
             <a href="{% url 'admin_staff:products' form.instance.category_id %}" class="">
-                к категориям
+                To categories
             </a>
         </button>
     </div>

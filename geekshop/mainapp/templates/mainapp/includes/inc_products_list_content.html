@@ -1,0 +1,90 @@
+<div class="container_pr">
+    {% include 'mainapp/includes/inc_category_menu.html' %}
+    <div class="products_list">
+        <div class="title clearfix">
+            <h2>
+                {% if category %}
+                    Category: "{{ category.name|title }}"
+                {% endif %}
+            </h2>
+        </div>
+        <div class="details-products clearfix">
+            <div class="details-slider">
+                <div>
+                    <img class="slider-product"
+                         src="/media/{{ product.image|default:'default_image_product.png' }}">
+                </div>
+                <div class="slider-control">
+                    <div class="block">
+                        <a href="#"><img style="width: 70px; height: 70px;"
+                                         src="/media/{{ product.image|default:'default_image_product.png' }}"
+                                         alt=""></a>
+                    </div>
+                    <div class="block">
+                        <a href="#"><img style="width: 70px; height: 70px;"
+                                         src="/media/{{ product.image|default:'default_image_product.png' }}"
+                                         alt=""></a>
+                    </div>
+                    <div class="block">
+                        <a href="#"><img style="width: 70px; height: 70px;"
+                                         src="/media/{{ product.image|default:'default_image_product.png' }}"
+                                         alt=""></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="description">
+                <h3 class="big-bold">{{ product.name|capfirst }}</h3>
+                <h3 class="red">Hot offer</h3>
+                <p class="price">{{ product.price }} <span>$</span></p>
+                <a href="{% url 'basket:add' product.pk %}" class="red-button">
+                    Buy <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </a>
+                <div class="description-text">
+                    {{ product.description }}
+                </div>
+            </div>
+        </div>
+        {% if object_list %}
+            <div class="related">
+                <div class="title clearfix">
+                    <h2>Similar products</h2>
+                    <a class="explore" href="#">show all<img src="/static/geekshop/img/arrow.png" alt=""></a>
+                </div>
+                {% include 'mainapp/includes/inc_products.html' %}
+            </div>
+            <nav class="paginator_container" aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                        </li>
+                    {% endif %}
+                    <li class="page-item"><a class="page-link"
+                                             href="?page={{ page_obj.number }}">{{ page_obj.number }}</a>
+                    </li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                        </li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+</div>

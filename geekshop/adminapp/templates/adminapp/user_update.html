@@ -5,11 +5,11 @@
   <form class="form-horizontal" action="{% url 'admin_staff:user_update' form.instance.id %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <input class="form-control" type="submit" value="сохранить">
+    <input class="form-control" type="submit" value="save">
   </form>
   <button class="btn btn-round form-control last">
     <a href="{% url 'admin_staff:users' %}">
-      к списку пользователей
+      To users list
     </a>
   </button>
 {% endblock %}
