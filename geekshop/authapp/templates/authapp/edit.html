@@ -12,7 +12,7 @@
         <div class="col-4 mx-auto">
             <div class="row">
                 <div class="user_avatar">
-                    <img src="{{ object.avatar.url|default:'avatar-default.png' }}" class="rounded-circle">
+                    <img src="{% if object.avatar %} {{ object.avatar.url }} {% else %} {% static "geekshop/img/avatar-default.png" %} {% endif %}" class="rounded-circle">
                 </div>
             </div>
             <div class="row">
