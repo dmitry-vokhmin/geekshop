@@ -29,31 +29,8 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-# LOGGING = {
-#     'version': 1,
-#     'filters': {
-#         'require_debug_true': {
-#             '()': 'django.utils.log.RequireDebugTrue',
-#         }
-#     },
-#     'handlers': {
-#         'console': {
-#             'level': 'DEBUG',
-#             'filters': ['require_debug_true'],
-#             'class': 'logging.StreamHandler',
-#         }
-#     },
-#     'loggers': {
-#         'django.db.backends': {
-#             'level': 'DEBUG',
-#             'handlers': ['console'],
-#         }
-#     }
-# }
+ALLOWED_HOSTS = ["geekshop-django.herokuapp.com", "localhost", "127.0.0.1"]
 
-
-# ALLOWED_HOSTS = [*]
-ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -77,10 +54,21 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'debug_toolbar',
-    'template_profiler_panel',
-    'django_extensions',
+    'storages'
 ]
+
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = 'geekshop-django'
+AWS_S3_REGION_NAME = 'us-east-1'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_DEFAULT_ACL = None
+
+STATICFILES_LOCATION = "static"
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+MEDIAFILES_LOCATION = "media"
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -133,8 +121,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'd97h9h63dmh3hc',
-        'USER': 'bafyslvoicahhu',
-        'PASSWORD': 'ea9edb94d4e656241e831b99c2efcb9ac98d696fba035a9edf344b0d26678051',
+        'USER': env("USER"),
+        'PASSWORD': env("PASSWORD"),
         'HOST': 'ec2-54-147-93-73.compute-1.amazonaws.com',
         'PORT': '5432',
     }
