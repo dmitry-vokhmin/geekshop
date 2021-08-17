@@ -20,38 +20,38 @@ class Order(models.Model):
     CANCEL = 'CNC'
 
     ORDERS_STATUS_CHOICES = (
-        (FORMING, 'формируется'),
-        (SENT_TO_PROCEED, 'отправлен в обработку'),
-        (PAID, 'оплачен'),
-        (PROCEEDED, 'обрабатывается'),
-        (READY, 'готов к выдаче'),
-        (CANCEL, 'отменен'),
+        (FORMING, 'forming'),
+        (SENT_TO_PROCEED, 'sent to proceed'),
+        (PAID, 'paid'),
+        (PROCEEDED, 'proceeded'),
+        (READY, 'ready'),
+        (CANCEL, 'cancel'),
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
     created = models.DateTimeField(
-        verbose_name='создан',
+        verbose_name='created',
         auto_now_add=True,
     )
     update = models.DateTimeField(
-        verbose_name='обновлен',
+        verbose_name='update',
         auto_now=True,
     )
     status = models.CharField(
-        verbose_name='статус',
+        verbose_name='status',
         max_length=3,
         choices=ORDERS_STATUS_CHOICES,
         default=FORMING,
     )
     is_active = models.BooleanField(
-        verbose_name='активен',
+        verbose_name='active',
         default=True,
     )
 
     def __str__(self):
-        return f'Текущий заказ: {self.id}'
+        return f'Current order: {self.id}'
 
     def get_summary(self):
         items = self.orderitems.select_related()
@@ -92,12 +92,12 @@ class OrderItem(models.Model):
 
     product = models.ForeignKey(
         Product,
-        verbose_name='продукт',
+        verbose_name='product',
         on_delete=models.CASCADE,
     )
 
     quantity = models.PositiveIntegerField(
-        verbose_name='количество',
+        verbose_name='quantity',
         default=0,
     )
 

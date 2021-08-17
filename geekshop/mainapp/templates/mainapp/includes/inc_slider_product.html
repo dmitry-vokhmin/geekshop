@@ -1,6 +1,8 @@
+{% load static %}
+
 <div class="details-slider">
     <div class="slider-product">
-        <img src="/static/geekshop/img/slider1.jpg">
+        <img src="{% static "geekshop/img/slider1.jpg" %}">
     </div>
     <div class="slider-control">
         {% for block in slider_blocks %}

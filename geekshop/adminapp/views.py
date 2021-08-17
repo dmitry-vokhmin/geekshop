@@ -25,7 +25,7 @@ class UserListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
-        context["title"] = "админка/пользователи"
+        context["title"] = "admin/users"
         return context
 
     def get_queryset(self):
@@ -39,7 +39,7 @@ class UserCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "пользователь/создать"
+        context["title"] = "user/create"
         return context
 
     def get_success_url(self):
@@ -53,7 +53,7 @@ class UserUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "пользователь/редактирование"
+        context["title"] = "user/edit"
         return context
 
     def get_success_url(self):
@@ -86,7 +86,7 @@ class CategoryListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
-        context["title"] = 'админка/категории'
+        context["title"] = 'admin/categories'
         return context
 
 
@@ -98,7 +98,7 @@ class CategoryCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "категории/создать"
+        context["title"] = "category/create"
         return context
 
 
@@ -112,7 +112,7 @@ class CategoryUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "категории/редактировать"
+        context["title"] = "category/edit"
         return context
 
     def form_valid(self, form):
@@ -136,7 +136,7 @@ class CategoryDeleteView(DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "категории/удаление"
+        context["title"] = "category/delete"
         return context
 
 
@@ -150,7 +150,7 @@ class ProductsListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
-        context["title"] = 'админка/продукт'
+        context["title"] = 'admin/product'
         context["category"] = self.kwargs["pk"]
         return context
 
@@ -168,7 +168,7 @@ class ProductCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "продукты/создание"
+        context["title"] = "product/create"
         context["category"] = self.kwargs["pk"]
         return context
 
@@ -184,7 +184,7 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "продукты/подробнее"
+        context["title"] = "product/details"
         return context
 
 
@@ -198,7 +198,7 @@ class ProductUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "продукты/редактирование"
+        context["title"] = "product/edit"
         return context
 
 
@@ -217,7 +217,7 @@ class ProductDeleteView(DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "продукты/удаление"
+        context["title"] = "product/delete"
         return context
 
 

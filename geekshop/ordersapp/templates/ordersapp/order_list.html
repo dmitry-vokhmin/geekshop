@@ -17,20 +17,20 @@
                 <div class="container">
                     <div class="row">
                         <div class="h2 text-center head">
-                            Ваши заказы,
+                            Youe orders,
                             {% if user.first_name %}
                                 {{ user.first_name|title }}
                             {% else %}
-                                Пользователь
+                                User
                             {% endif %}
                         </div>
                         <table class="table orders_list">
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Создан</th>
-                                <th>Обновлен</th>
-                                <th>Статус</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th>Status</th>
                                 <th colspan="3" style="text-align: center;">Actions</th>
                             </tr>
                             </thead>
@@ -44,20 +44,20 @@
                                         <td>{{ item.get_status_display }}</td>
                                         <td>
                                             <a href="{% url 'ordersapp:order_read' item.pk %}">
-                                                посмотреть
+                                                Details
                                             </a>
                                         </td>
                                         <td>
                                             {% if item.status == 'FM' %}
                                                 <a href="{% url 'ordersapp:order_update' item.pk %}">
-                                                    редактировать
+                                                    Edit
                                                 </a>
                                             {% endif %}
                                         </td>
                                         <td>
                                             {% if item.status == 'FM' %}
                                                 <a href="{% url 'ordersapp:order_delete' item.pk %}">
-                                                    удалить
+                                                    Delete
                                                 </a>
                                             {% endif %}
                                         </td>
@@ -68,12 +68,12 @@
                         </table>
                         <button class="btn btn-default btn-round">
                             <a href="{% url 'ordersapp:order_create' %}">
-                                новый
+                                Create
                             </a>
                         </button>
                         <button class="btn btn-default btn-round">
                             <a href="{% url 'geekshopapp:index' %}">
-                                на главную
+                                Main page
                             </a>
                         </button>
                     </div>

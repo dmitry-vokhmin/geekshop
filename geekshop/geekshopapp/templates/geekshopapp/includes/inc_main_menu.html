@@ -2,19 +2,19 @@
     <a href="{% url 'geekshopapp:index' %}" class="logo"></a>
     <div class="top_menu">
         <ul class="menu">
-            <li><a href="{% url 'geekshopapp:index' %}" class="{% if request.resolver_match.url_name == 'index' %}
+            <li><a href="{% url 'geekshopapp:index' %}" class="{% if request.resolver_match.namespace == 'geekshopapp' %}
               active
-            {% endif %}">домой</a></li>
+            {% endif %}">Home</a></li>
             <li><a href="{% url 'products:index' %}" class="{% if request.resolver_match.namespace == 'products' %}
               active
-            {% endif %}">продукты</a></li>
+            {% endif %}">Products</a></li>
             <li><a href="{% url 'geekshopapp:contacts' %}" class="{% if request.resolver_match.url_name == 'contacts' %}
               active
-            {% endif %}">контакты</a></li>
+            {% endif %}">Contacts</a></li>
             {% if user.is_superuser %}
                 <li>
                     <a href="{% url 'admin_staff:users' %}">
-                        Админка
+                        Admin Panel
                     </a>
                 </li>
             {% endif %}
@@ -24,18 +24,18 @@
 
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                            aria-expanded="false">
-                            {{ user.username|default:'Пользователь' }}
+                            {{ user.username|default:'User' }}
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="nav-link text-dark" href="{% url 'auth:edit' %}">
-                                    Профиль
+                                    Profile
                                 </a>
                             </li>
                             <li>
                                 <a class="nav-link text-dark" href="{% url 'ordersapp:orders_list' %}">
-                                    Заказы
+                                    Orders
                                 </a>
                             </li>
                         </ul>
@@ -44,9 +44,9 @@
             {% endif %}
             <li>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'auth:logout' %}">выйти</a>
+                    <a href="{% url 'auth:logout' %}">Logout</a>
                 {% else %}
-                    <a href="{% url 'auth:login' %}">войти</a>
+                    <a href="{% url 'auth:login' %}">Login</a>
                 {% endif %}
             </li>
         </ul>

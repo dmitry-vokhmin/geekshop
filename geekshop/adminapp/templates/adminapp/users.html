@@ -4,37 +4,37 @@
 {% block content %}
 <main>
     <div class="container-fluid">
-        <h1 class="mt-4">Пользователи</h1>
+        <h1 class="mt-4">Users</h1>
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
-                Пользователи
+                Users
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>Имя пользователя</th>
-                            <th>Имя</th>
-                            <th>Фамилия</th>
-                            <th>Адрес эл. почты</th>
-                            <th>Персонал сайта</th>
-                            <th>Активный</th>
-                            <th>Вход</th>
-                            <th>Удалить</th>
+                            <th>User nickname</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                            <th>Permission</th>
+                            <th>Active</th>
+                            <th>Last login</th>
+                            <th>Delete</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Имя пользователя</th>
-                            <th>Имя</th>
-                            <th>Фамилия</th>
-                            <th>Адрес эл. почты</th>
-                            <th>Персонал сайта</th>
-                            <th>Активный</th>
-                            <th>Вход</th>
-                            <th>Удалить</th>
+                            <th>User nickname</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                            <th>Permission</th>
+                            <th>Active</th>
+                            <th>Last login</th>
+                            <th>Delete</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -89,7 +89,7 @@
             </div>
             <div class="card-footer">
                 <a href="{% url 'adminapp:user_create' %}">
-                    <button class="btn btn-success">Создать пользователя</button>
+                    <button class="btn btn-success">Create user</button>
                 </a>
             </div>
         </div>

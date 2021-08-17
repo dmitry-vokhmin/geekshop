@@ -4,17 +4,16 @@
 
 {% block content %}
     <div class="row">
-        <p> Осторожно! Вы точно хотите удалть продукт - {{ object.name }} ?</p>
+        <p>Do you want to delete - {{ object.name }} ?</p>
         <form class="form-horizontal" action="{% url 'admin_staff:product_delete' object.pk %}" method="post"
               enctype="multipart/form-data">
             {% csrf_token %}
-            <input class="btn btn-danger m-3" type="submit" value="Удалить">
+            <input class="btn btn-danger m-3" type="submit" value="delete">
         </form>
         <a href="{% url 'admin_staff:categories' %}" class="m-3">
             <button class="btn btn-round btn-success">
-                Отмена
+                Cancel
             </button>
         </a>
-
     </div>
 {% endblock %}

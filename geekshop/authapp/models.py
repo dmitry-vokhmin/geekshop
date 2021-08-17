@@ -8,7 +8,7 @@ from django.dispatch import receiver
 
 class ShopUser(AbstractUser):
     avatar = models.ImageField(upload_to="users_avatars", blank=True)
-    age = models.PositiveIntegerField(verbose_name="возвраст", null=True)
+    age = models.PositiveIntegerField(verbose_name="age", null=True)
     is_deleted = models.BooleanField(default=False)
     activation_key = models.CharField(max_length=128, blank=True)
     activation_key_expires = models.DateTimeField(default=(now() + timedelta(hours=48)))
@@ -37,19 +37,19 @@ class ShopUserProfile(models.Model):
     )
 
     tag_line = models.CharField(
-        verbose_name='тэги',
+        verbose_name='tag',
         max_length=128,
         blank=True,
     )
 
     about_me = models.TextField(
-        verbose_name='о себе',
+        verbose_name='about me',
         max_length=512,
         blank=True,
     )
 
     gender = models.CharField(
-        verbose_name='пол',
+        verbose_name='gender',
         max_length=1,
         choices=GENDER_CHOISES,
         blank=True

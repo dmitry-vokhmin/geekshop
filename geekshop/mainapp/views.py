@@ -6,8 +6,11 @@ from django.views.generic.list import ListView
 from .models import ProductCategory, Product
 
 
-def get_hot_product():
-    product = Product.objects.all()
+def get_hot_product(pk):
+    if pk:
+        product = Product.objects.filter(category__pk=pk).all()
+    else:
+        product = Product.objects.all()
     return random.sample(list(product), 1)[0]
 
 
@@ -30,11 +33,11 @@ class ProductsListView(ListView):
 
     def get_context_data(self, *, object_list=None, queryset=None, **kwargs):
         context = super().get_context_data()
-        context["title"] = "продукты/каталог"
-        context["product"] = get_hot_product()
+        context["title"] = "product/catalog"
+        context["product"] = get_hot_product(self.kwargs.get("pk", 0))
         context["product_categories"] = ProductCategory.objects.filter(is_deleted=False)
         category = ProductCategory.objects.filter(pk=self.kwargs.get("pk", 0)).first()
-        context["category"] = category or {"name": "все"}
+        context["category"] = category or {"name": "all"}
         return context
 
 
@@ -45,7 +48,7 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "продукт"
+        context["title"] = "product"
         context["product_categories"] = ProductCategory.objects.filter(is_deleted=False)
         return context
 

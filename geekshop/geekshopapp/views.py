@@ -12,7 +12,7 @@ class IndexListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "магазин"
+        context["title"] = "shop"
         return context
 
 
@@ -21,13 +21,13 @@ class ContactsListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "контакты"
+        context["title"] = "contacts"
         context["locations"] = [
             {
-                "city": "Москва",
-                "phone": "+7-888-888-8888",
+                "city": "Boston",
+                "phone": "+1-888-888-8888",
                 "email": "info@geekshopapp.ru",
-                "address": "В пределах МКАД"
+                "address": "Somewhere"
             } for _ in range(3)
         ]
         return context

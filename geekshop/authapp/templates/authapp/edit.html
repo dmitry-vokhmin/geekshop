@@ -21,11 +21,11 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                     {{ form_2.as_p }}
-                    <input class="form-control" type="submit" value="сохранить">
+                    <input class="form-control" type="submit" value="save">
                 </form>
                 <button class="btn btn-round form-control last">
                     <a href="{% url 'geekshopapp:index' %}" class="">
-                        на главную
+                        Main page
                     </a>
                 </button>
             </div>

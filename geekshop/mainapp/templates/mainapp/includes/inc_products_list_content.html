@@ -4,7 +4,7 @@
         <div class="title clearfix">
             <h2>
                 {% if category %}
-                    Категория: "{{ category.name|title }}"
+                    Category: "{{ category.name|title }}"
                 {% endif %}
             </h2>
         </div>
@@ -35,10 +35,10 @@
 
             <div class="description">
                 <h3 class="big-bold">{{ product.name|capfirst }}</h3>
-                <h3 class="red">горячее предложение</h3>
-                <p class="price">{{ product.price }} <span>руб</span></p>
+                <h3 class="red">Hot offer</h3>
+                <p class="price">{{ product.price }} <span>$</span></p>
                 <a href="{% url 'basket:add' product.pk %}" class="red-button">
-                    заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    Buy <i class="fa fa-chevron-right" aria-hidden="true"></i>
                 </a>
                 <div class="description-text">
                     {{ product.description }}
@@ -48,8 +48,8 @@
         {% if object_list %}
             <div class="related">
                 <div class="title clearfix">
-                    <h2>Похожие продукты</h2>
-                    <a class="explore" href="#">показать все <img src="/static/geekshop/img/arrow.png" alt=""></a>
+                    <h2>Similar products</h2>
+                    <a class="explore" href="#">show all<img src="/static/geekshop/img/arrow.png" alt=""></a>
                 </div>
                 {% include 'mainapp/includes/inc_products.html' %}
             </div>

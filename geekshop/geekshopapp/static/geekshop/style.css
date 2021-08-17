@@ -15,7 +15,10 @@ html, body {
 
 .top {
     min-height: 800px;
-    background: linear-gradient(0deg, #EBF3FB 8.84%, rgba(152, 195, 232, 0) 31.12%);
+    background: #f7f7f7;
+    background-image: url(img/background_image.png);
+    background-repeat: no-repeat;
+    background-position: right bottom;
 }
 
 .top_basket {
@@ -41,11 +44,7 @@ html, body {
 }
 
 .slider {
-    height: 800px;
-    background-image: url(img/illustration.png);
-    background-repeat: no-repeat;
-    background-position: right center;
-    background-size: 44%;
+    height: 600px;
     padding-top: 288px;
 }
 
@@ -157,6 +156,11 @@ html, body {
 
 .button-order img {
     padding-left: 22px;
+}
+
+.index_img {
+    height: 270px;
+    width: 270px;
 }
 
 .green {
