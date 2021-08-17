@@ -63,5 +63,5 @@ class BasketEditView(LoginRequiredMixin, View):
             context = {
                 "basket_items": basket_items
             }
-            result = render_to_string("basketapp/includes/inc_basket_list.html", context)
+            result = render_to_string("basketapp/basket_items.html", context)
             return JsonResponse({"result": result, "basket_count": basket_count})
