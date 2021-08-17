@@ -23,8 +23,8 @@
                          src="{{ item.product.image.url|default:'default_image_product.png' }}">{{ item.product }}</td>
                 <td><input type="number" name="{{ item.pk }}"
                            min="0"
-                           value="{{ item.quantity }}$"></td>
-                <td>{{ item.product.price }}</td>
+                           value="{{ item.quantity }}"></td>
+                <td>{{ item.product.price }}$</td>
                 <td>
                     <button class="btn btn-round">
                         <a href="{% url 'basket:remove' item.pk %}" class="">
